@@ -1,4 +1,4 @@
-import logo from '@/public/android-chrome-512x512.png'
+import logo from '@/public/assets/logo.png'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
