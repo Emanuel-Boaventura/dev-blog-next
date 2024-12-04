@@ -10,7 +10,7 @@ import { setCookie } from 'nookies'
 import { useForm } from 'react-hook-form'
 import s from './styles.module.scss'
 
-export default function Login() {
+export default function Register() {
   const { trigger, isMutating } = useRegister()
   const router = useRouter()
 
