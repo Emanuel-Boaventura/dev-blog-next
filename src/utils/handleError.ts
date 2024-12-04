@@ -1,4 +1,5 @@
 import { openConfirmModal } from '@mantine/modals'
+import { showNotification } from '@mantine/notifications'
 import { isAxiosError } from 'axios'
 
 const defaultError = 'Houve algum erro no procedimento.'
@@ -7,12 +8,12 @@ function isString(item: any) {
   return typeof item === 'string'
 }
 
-function openModal(message: string) {
-  openConfirmModal({
+function showErrorNotification(message: string) {
+  showNotification({
     title: 'Houve um erro',
-    children: message,
-    cancelProps: { display: 'none' },
-    onConfirm: () => console.log('Confirmed'),
+    message: message,
+    color: 'red',
+    autoClose: 6000,
   })
 }
 
@@ -22,17 +23,17 @@ export function handleError(error: any, defaultErrorMessage?: string) {
   const errorData = error?.response?.data
 
   if (isString(error)) {
-    return openModal(error)
+    return showErrorNotification(error)
   }
 
   if (isAxiosError(error)) {
     if (isString(errorData?.message)) {
-      return openModal(errorData.message)
+      return showErrorNotification(errorData.message)
     }
     if (isString(errorData?.error)) {
-      return openModal(errorData.error)
+      return showErrorNotification(errorData.error)
     }
   }
 
-  return openModal(errorMessage)
+  return showErrorNotification(errorMessage)
 }
