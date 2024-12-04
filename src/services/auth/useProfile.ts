@@ -9,5 +9,5 @@ interface IProfile {
 export function useProfile() {
   const { data, error, isLoading, mutate } = useSWR<IProfile>(`/auth/profile`)
 
-  return { data: data, error, isLoading, mutate }
+  return { data, error, isLoading, mutate }
 }

@@ -27,58 +27,59 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm' }}
       padding='md'
-      classNames={{ header: s.header }}
+      classNames={{ header: s.header, main: s.main }}
     >
       <AppShell.Header>
-        <Image src={logo} className={s.logo} alt='DevBlog Logo' />
+        <div className={s.headerContent}>
+          <Image src={logo} className={s.logo} alt='DevBlog Logo' />
 
-        <Menu shadow='md' width={160}>
-          <Menu.Target>
-            <Button
-              variant='transparent'
-              classNames={{ root: s.button, label: s.label }}
-            >
-              <p>{data?.name || '...'}</p>
-
-              <Avatar
-                src='/avatar.png'
-                alt='Minha foto'
-                classNames={{ root: s.avatar }}
+          <Menu shadow='md' width={160}>
+            <Menu.Target>
+              <Button
+                variant='transparent'
+                classNames={{ root: s.button, label: s.label }}
               >
-                {data?.name.split('')[0]}
-              </Avatar>
-            </Button>
-          </Menu.Target>
+                <p>{data?.name || '...'}</p>
 
-          <Menu.Dropdown>
-            <Menu.Item
-              component={Link}
-              href={'/settings'}
-              leftSection={<Gear />}
-            >
-              Configurações
-            </Menu.Item>
-            <Menu.Item
-              component={Link}
-              href={'/report'}
-              leftSection={<ChartLine />}
-            >
-              Relatório
-            </Menu.Item>
+                <Avatar
+                  src='/avatar.png'
+                  alt='Minha foto'
+                  classNames={{ root: s.avatar }}
+                >
+                  {data?.name.split('')[0]}
+                </Avatar>
+              </Button>
+            </Menu.Target>
 
-            <Menu.Divider />
+            <Menu.Dropdown>
+              <Menu.Item
+                component={Link}
+                href={'/settings'}
+                leftSection={<Gear />}
+              >
+                Configurações
+              </Menu.Item>
+              <Menu.Item
+                component={Link}
+                href={'/report'}
+                leftSection={<ChartLine />}
+              >
+                Relatório
+              </Menu.Item>
 
-            <Menu.Item
-              onClick={handleSignOut}
-              color='red'
-              leftSection={<SignOut />}
-            >
-              Sair
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+              <Menu.Divider />
+
+              <Menu.Item
+                onClick={handleSignOut}
+                color='red'
+                leftSection={<SignOut />}
+              >
+                Sair
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </div>
       </AppShell.Header>
 
       <AppShell.Main>{children}</AppShell.Main>
