@@ -32,7 +32,9 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
     >
       <AppShell.Header>
         <div className={s.headerContent}>
-          <Image src={logo} className={s.logo} alt='DevBlog Logo' />
+          <Link href='/'>
+            <Image src={logo} className={s.logo} alt='DevBlog Logo' />
+          </Link>
 
           <Menu shadow='md' width={160}>
             <Menu.Target>
