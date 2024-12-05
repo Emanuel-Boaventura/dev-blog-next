@@ -71,7 +71,7 @@ const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
 
   async function handleDelete() {
     try {
-      // await deletePost()
+      await deletePost()
 
       showNotification({
         title: 'Post deletado!',
