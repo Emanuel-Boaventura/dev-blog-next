@@ -1,40 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# DevBlog
 
-## Getting Started
+Front-end do site DevBlog, esse projeto precisa rodar em conjunto com o [backend](https://github.com/Emanuel-Boaventura/dev-blog-nest).
 
-First, run the development server:
+## Como rodar
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Clone o repositório de baixe as dependências
+- Rodando um `npm install` pode dar um _erro_ de dependências, adicionando a flag `--legacy-peer-deeps` deve resolver.
+- Lembre de criar um arquivo `.env` e adicionar o apontamento para a rota do servidor backend.
+- Rode `npm run dev` e o projeto ja deve estar disponível.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## TECNOLOGIAS UTILIZADAS
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Os frameworks e bibliotecas foram escolhidos por suas vantagens técnicas e pelo fato de serem amplamente utilizados no meu ambiente profissional atual. Essa familiaridade garantiu um desenvolvimento mais rápido.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Next.js
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+O Next.js combina o melhor de duas abordagens: renderização no servidor (SSR) e no cliente (CSR), além de otimizar o desempenho e a SEO da aplicação.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Mantine e SASS
 
-## Learn More
+O Mantine oferece uma ampla gama de componentes acessíveis e personalizáveis, enquanto o SASS permite modularizar e reutilizar estilos, proporcionando flexibilidade na estilização e um design coeso. Além dos dois funcionarem muito bem juntos.
 
-To learn more about Next.js, take a look at the following resources:
+### React-hook-form, Yup e @hookform/resolvers
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- React-hook-form: Gerencia estado e validação de formulários de forma performática.
+- Yup: Define esquemas para validação, garantindo que os dados atendam a critérios específicos.
+- @hookform/resolvers: Integra o yup ao react-hook-form, simplificando a validação dos formulários.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Axios, SWR e Nookies
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- Axios: Um cliente HTTP confiável e fácil de usar, ideal para chamadas de API.
+- SWR: Um mecanismo eficiente de busca e cache de dados, melhorando a performance e garantindo informações atualizadas.
+- Nookies: Simplifica o gerenciamento de cookies, especialmente em aplicações com renderização do lado do servidor (SSR).
