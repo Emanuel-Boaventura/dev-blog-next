@@ -11,8 +11,8 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
-        port: '3333', // Specify the port if it's different from the default
-        pathname: '/uploads/**', // Allow images from the /uploads path
+        port: '3333', // Altere aqui se mudar no back
+        pathname: '/uploads/**',
       },
     ],
   },

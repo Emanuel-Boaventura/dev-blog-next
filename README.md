@@ -7,6 +7,7 @@ Front-end do site DevBlog, esse projeto precisa rodar em conjunto com o [backend
 - Clone o repositório de baixe as dependências
 - Rodando um `npm install` pode dar um _erro_ de dependências, adicionando a flag `--legacy-peer-deeps` deve resolver.
 - Lembre de criar um arquivo `.env` e adicionar o apontamento para a rota do servidor backend.
+- Caso altere a porta do backend para algo além de `33333` altere aqui o `next.config.ts` para carregar as imagens corretamente.
 - Rode `npm run dev` e o projeto ja deve estar disponível.
 
 ## TECNOLOGIAS UTILIZADAS
