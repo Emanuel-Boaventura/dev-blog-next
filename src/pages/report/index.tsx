@@ -1,15 +1,15 @@
-import { HomePostCard } from '@/components/HomePostCard'
+import { ReportPostCard } from '@/components/ReportPostCard'
 import { RootLayout } from '@/layouts/RootLayout'
-import { useGetAllPosts } from '@/services/posts/useGetAll'
-import { Button, Center, Skeleton } from '@mantine/core'
-import { Plus } from '@phosphor-icons/react'
-import Link from 'next/link'
+import { useProfile } from '@/services/auth/useProfile'
+import { useGetAllUserPosts } from '@/services/posts/useGetAllUserPosts'
+import { Center, Skeleton } from '@mantine/core'
 import { type ReactElement } from 'react'
 import { NextPageWithLayout } from '../_app'
 import s from './styles.module.scss'
 
-const Home: NextPageWithLayout = () => {
-  const { data, isLoading, error } = useGetAllPosts()
+const Report: NextPageWithLayout = () => {
+  const { data: user } = useProfile()
+  const { data, isLoading, error } = useGetAllUserPosts(user?.id)
 
   if (error) return <Center>Erro ao carregar os posts</Center>
 
@@ -27,22 +27,14 @@ const Home: NextPageWithLayout = () => {
           <Skeleton height={200} radius={12} />
         </>
       ) : (
-        sortedPosts?.map(post => <HomePostCard key={post.id} data={post} />)
+        sortedPosts?.map(post => <ReportPostCard key={post.id} data={post} />)
       )}
-
-      <Button
-        component={Link}
-        href='posts/new'
-        classNames={{ root: s.addPost }}
-      >
-        <Plus size={32} weight='bold' />
-      </Button>
     </div>
   )
 }
 
-Home.getLayout = function getLayout(page: ReactElement) {
+Report.getLayout = function getLayout(page: ReactElement) {
   return <RootLayout>{page}</RootLayout>
 }
 
-export default Home
+export default Report

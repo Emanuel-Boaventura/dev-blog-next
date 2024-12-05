@@ -41,7 +41,6 @@ export default function Document() {
           href='/apple-touch-icon.png'
         />
         <meta name='apple-mobile-web-app-title' content='DevBlog' />
-        <link rel='manifest' href='/site.webmanifest' />
       </Head>
       <body>
         <Main />

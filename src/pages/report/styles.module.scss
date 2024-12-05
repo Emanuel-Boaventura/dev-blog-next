@@ -1,0 +1,24 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .addPost {
+    position: fixed;
+    bottom: 48px;
+    right: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    height: 48px;
+    width: 48px;
+    padding: 0;
+    border-radius: 100%;
+
+    @media (max-width: 425px) {
+      bottom: 32px;
+      right: 32px;
+    }
+  }
+}

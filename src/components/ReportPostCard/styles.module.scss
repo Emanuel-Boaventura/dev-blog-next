@@ -1,0 +1,37 @@
+.card {
+  gap: 16px;
+  flex-direction: row;
+  transition: background-color 0.1s ease;
+
+  &:hover {
+    background-color: var(--mantine-color-dark-5);
+  }
+
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    line-height: normal;
+  }
+
+  .text {
+    display: flex;
+    gap: 16px;
+  }
+
+  img {
+    height: 120px;
+    width: 120px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-left: auto;
+  }
+
+  @media (max-width: 425px) {
+    .text {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+}
