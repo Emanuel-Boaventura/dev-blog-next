@@ -37,8 +37,11 @@ interface IEditPostPage {
 const EditPost: NextPageWithLayout<IEditPostPage> = ({ post }) => {
   const { trigger: editPost, isMutating } = useEditPost(post.id)
   const [file, setFile] = useState<File | null>(null)
-
   const router = useRouter()
+
+  const imageUrl = post.image_url
+    ? `${process.env.NEXT_PUBLIC_BASE_URL}${post.image_url}`
+    : undefined
 
   const {
     register,
@@ -93,11 +96,7 @@ const EditPost: NextPageWithLayout<IEditPostPage> = ({ post }) => {
         minRows={4}
       />
 
-      <DropzoneArea
-        setFile={setFile}
-        // imageUrl={post.image_url}
-        imageUrl='/assets/logo.png'
-      />
+      <DropzoneArea setFile={setFile} imageUrl={imageUrl} />
 
       <Button
         fullWidth

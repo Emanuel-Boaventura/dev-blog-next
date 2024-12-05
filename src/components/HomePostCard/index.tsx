@@ -17,7 +17,7 @@ export function HomePostCard({ data }: { data: IPost }) {
 
       {data.image_url && (
         <Image
-          src={'/assets/logo.png'}
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}${data.image_url}`}
           width={480}
           height={480}
           objectFit='cover'

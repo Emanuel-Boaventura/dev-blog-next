@@ -144,10 +144,9 @@ const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
         <figure className={s.img}>
           {post.image_url && (
             <Image
-              // src={data.image_url}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${post.image_url}`}
               width={480}
               height={480}
-              src={'/assets/logo.png'}
               objectFit='cover'
               alt={post.title}
             />

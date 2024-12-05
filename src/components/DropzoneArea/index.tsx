@@ -17,7 +17,6 @@ interface IDropzoneArea {
 }
 
 export function DropzoneArea({ setFile, imageUrl }: IDropzoneArea) {
-  console.log('imageUrl:', imageUrl)
   const [image, setImage] = useState<string>('')
 
   function handleDrop(files: FileWithPath[]) {
@@ -30,6 +29,7 @@ export function DropzoneArea({ setFile, imageUrl }: IDropzoneArea) {
       color: 'teal',
     })
   }
+
   function handleReject(files: FileRejection[]) {
     const error = files[0].errors[0].message ?? 'Erro ao processar o Imagem'
     showNotification({
