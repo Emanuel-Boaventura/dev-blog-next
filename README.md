@@ -4,12 +4,11 @@ Front-end do site DevBlog, esse projeto precisa rodar em conjunto com o [backend
 
 ## Como rodar
 
-- Os projeto foi desenvolvido na versão 20.10.0 do node, recomendo utilizar a mesma para evitar conflitos.
-- Clone o repositório de baixe as dependências
-- Rodando um `npm install` pode dar um _erro_ de dependências, adicionando a flag `--legacy-peer-deps` deve resolver.
+- Os projeto foi desenvolvido na versão `20.10.0` do node, recomendo utilizar a mesma para evitar conflitos.
+- Após clonar o repositório ao rodar um `npm install` pode dar um _erro_ de dependências, adicionando a flag `--legacy-peer-deps` deve resolver.
 - Não é preciso alterar o arquivo `.env`, caso o faça siga o padrão estabelecido.
 - Caso altere a porta do backend para algo além de `33333` altere aqui `.env` para comunicar com o servidor e o `next.config.ts` para carregar as imagens corretamente.
-- Rode `npm run dev` e o projeto ja deve estar disponível.
+- Rode `npm run dev` e o projeto deve iniciar na porta `3000` do navegador.
 
 ## TECNOLOGIAS UTILIZADAS
 
