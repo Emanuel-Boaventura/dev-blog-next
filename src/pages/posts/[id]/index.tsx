@@ -1,4 +1,4 @@
-import { CommentCard } from '@/components/HomePostCard copy'
+import { CommentCard } from '@/components/CommentCard'
 import { RootLayout } from '@/layouts/RootLayout'
 import me from '@/public/assets/me.jpg'
 import { useProfile } from '@/services/auth/useProfile'
