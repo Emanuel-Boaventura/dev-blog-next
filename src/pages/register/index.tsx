@@ -56,7 +56,7 @@ export default function Register() {
         {...register('name')}
         label='Usuário'
         placeholder='Digite seu nome de usuário'
-        error={errors.email?.message}
+        error={errors.name?.message}
         className={s.input}
         disabled={isMutating}
       />

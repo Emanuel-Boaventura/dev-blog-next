@@ -55,7 +55,7 @@ export default function Login() {
       <TextInput
         {...register('name')}
         label='Usuário'
-        placeholder='Digite seu nome de usuário'
+        placeholder='name seu nome de usuário'
         error={errors.email?.message}
         className={s.input}
       />
