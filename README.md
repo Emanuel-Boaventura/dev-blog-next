@@ -4,6 +4,7 @@ Front-end do site DevBlog, esse projeto precisa rodar em conjunto com o [backend
 
 ## Como rodar
 
+- Os projeto foi desenvolvido na versão 20.10.0 do node, recomendo utilizar a mesma para evitar conflitos.
 - Clone o repositório de baixe as dependências
 - Rodando um `npm install` pode dar um _erro_ de dependências, adicionando a flag `--legacy-peer-deps` deve resolver.
 - Não é preciso alterar o arquivo `.env`, caso o faça siga o padrão estabelecido.

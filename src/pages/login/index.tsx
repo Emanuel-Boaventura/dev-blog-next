@@ -55,14 +55,14 @@ export default function Login() {
       <TextInput
         {...register('name')}
         label='Usuário'
-        placeholder='name seu nome de usuário'
+        placeholder='Seu nome de usuário'
         error={errors.email?.message}
         className={s.input}
       />
 
       <TextInput
         {...register('email')}
-        label='Usuário'
+        label='email'
         type='email'
         placeholder='Digite seu melhor email'
         error={errors.email?.message}

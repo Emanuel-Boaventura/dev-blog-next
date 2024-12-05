@@ -58,7 +58,7 @@ export default function Register() {
 
       <TextInput
         {...register('email')}
-        label='Usuário'
+        label='Email'
         type='email'
         placeholder='Digite seu melhor email'
         error={errors.email?.message}
