@@ -45,7 +45,7 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
                 <p>{data?.name || '...'}</p>
 
                 <Avatar
-                  src='/avatar.png'
+                  // src='/avatar.png'
                   alt='Minha foto'
                   classNames={{ root: s.avatar }}
                 >

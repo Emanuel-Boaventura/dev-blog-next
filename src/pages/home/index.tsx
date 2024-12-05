@@ -1,6 +1,7 @@
+import { HomePostCard } from '@/components/Posts/HomePostCard'
 import { RootLayout } from '@/layouts/RootLayout'
-import { IPost, useGetAllPosts } from '@/services/posts/useGetAll'
-import { Button, Card, Center, Skeleton } from '@mantine/core'
+import { useGetAllPosts } from '@/services/posts/useGetAll'
+import { Button, Center, Skeleton } from '@mantine/core'
 import Link from 'next/link'
 import { type ReactElement } from 'react'
 import { NextPageWithLayout } from '../_app'
@@ -9,16 +10,12 @@ import s from './styles.module.scss'
 const Home: NextPageWithLayout = () => {
   const { data, isLoading, error } = useGetAllPosts()
 
-  function PostCard({ data }: { data: IPost }) {
-    return (
-      <Card component={Link} href={`/posts/${data.id}`}>
-        <h2>{data.title}</h2>
-        <p>{data.description}</p>
-      </Card>
-    )
-  }
-
   if (error) return <Center>Erro ao carregar os posts</Center>
+
+  const sortedPosts = data?.sort(
+    (a, b) =>
+      new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+  )
 
   return (
     <div className={s.content}>
@@ -29,7 +26,7 @@ const Home: NextPageWithLayout = () => {
           <Skeleton height={200} radius={12} />
         </>
       ) : (
-        data?.map(post => <PostCard data={post} />).reverse()
+        sortedPosts?.map(post => <HomePostCard key={post.id} data={post} />)
       )}
 
       <Button component={Link} href='posts/new'>

@@ -4,6 +4,8 @@ export interface IPost {
   id: number
   title: string
   description: string
+  image_url: string | null
+  created_at: string
 }
 
 export function useGetAllPosts() {

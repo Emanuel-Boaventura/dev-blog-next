@@ -1,0 +1,48 @@
+.card {
+  gap: 16px;
+  flex-direction: row;
+  transition: background-color 0.1s ease;
+
+  &:hover {
+    background-color: var(--mantine-color-dark-5);
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+
+    .date {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+  }
+
+  img {
+    height: 120px;
+    width: 120px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-left: auto;
+  }
+
+  @media (max-width: 425px) {
+    img {
+      display: none;
+    }
+
+    .text p {
+      line-clamp: 3;
+      -webkit-line-clamp: 3; /* number of lines to show */
+    }
+  }
+}
