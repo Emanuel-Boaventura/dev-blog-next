@@ -2,6 +2,7 @@ import { HomePostCard } from '@/components/Posts/HomePostCard'
 import { RootLayout } from '@/layouts/RootLayout'
 import { useGetAllPosts } from '@/services/posts/useGetAll'
 import { Button, Center, Skeleton } from '@mantine/core'
+import { Plus } from '@phosphor-icons/react'
 import Link from 'next/link'
 import { type ReactElement } from 'react'
 import { NextPageWithLayout } from '../_app'
@@ -29,8 +30,12 @@ const Home: NextPageWithLayout = () => {
         sortedPosts?.map(post => <HomePostCard key={post.id} data={post} />)
       )}
 
-      <Button component={Link} href='posts/new'>
-        Novo post
+      <Button
+        component={Link}
+        href='posts/new'
+        classNames={{ root: s.addPost }}
+      >
+        <Plus size={32} weight='bold' />
       </Button>
     </div>
   )
