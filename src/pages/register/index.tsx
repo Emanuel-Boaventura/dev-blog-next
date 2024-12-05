@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
-import { setCookie } from 'nookies'
 import { useForm } from 'react-hook-form'
 import s from './styles.module.scss'
 
@@ -24,20 +23,16 @@ export default function Register() {
 
   async function onSubmit(form: TRegisterSchema) {
     try {
-      const { data } = await trigger(form)
+      await trigger(form)
 
       showNotification({
         title: 'Conta criada com sucesso!',
-        message: `Bem-vindo ao DevBlog, ${data.name}!`,
+        message: `Faça o login para acessar!`,
         color: 'teal',
+        autoClose: 8000,
       })
 
-      setCookie(null, 'dev-blog-userToken', `${data.id}-${data.email}`, {
-        maxAge: 24 * 60 * 60 * 30, // 30 days
-        path: '/',
-      })
-
-      router.push('/home')
+      router.push('/login')
     } catch (error) {
       handleError(error)
     }
