@@ -3,13 +3,21 @@ import { RootLayout } from '@/layouts/RootLayout'
 import { useProfile } from '@/services/auth/useProfile'
 import { useGetAllPostComments } from '@/services/comments/useGetAllPostComments'
 import { getPostById, IPostFullData } from '@/services/posts/getPostById'
+import { useDeletePost } from '@/services/posts/useDeletePost'
 import { dateFormatter } from '@/utils/formatters'
-import { Button, Card, Center, Skeleton } from '@mantine/core'
-import { openContextModal } from '@mantine/modals'
-import { PencilLine } from '@phosphor-icons/react'
+import { handleError } from '@/utils/handleError'
+import { Button, Card, Center, Menu, Skeleton, Text } from '@mantine/core'
+import { openConfirmModal, openContextModal } from '@mantine/modals'
+import { showNotification } from '@mantine/notifications'
+import {
+  DotsThreeOutlineVertical,
+  PencilLine,
+  Trash,
+} from '@phosphor-icons/react'
 import { GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import nookies from 'nookies'
 import { type ReactElement } from 'react'
 import { NextPageWithLayout } from '../../_app'
@@ -36,6 +44,8 @@ interface IPostPage {
 
 const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
   const { data: user } = useProfile()
+  const { trigger: deletePost, isMutating: isDeleting } = useDeletePost(post.id)
+  const router = useRouter()
   const {
     data: comments,
     isLoading,
@@ -59,18 +69,71 @@ const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
     })
   }
 
+  async function handleDelete() {
+    try {
+      // await deletePost()
+
+      showNotification({
+        title: 'Post deletado!',
+        message: 'O post foi deletado com sucesso.',
+        color: 'teal',
+      })
+
+      router.push('/home')
+    } catch (error) {
+      handleError(error)
+    }
+  }
+
+  function openDeleteModal() {
+    openConfirmModal({
+      title: 'Deletar Post',
+      centered: true,
+      children: (
+        <Text size='sm'>
+          Tem certeza que deseja deletar este post? Esta ação não pode ser
+          desfeita.
+        </Text>
+      ),
+      labels: { confirm: 'Delete ', cancel: 'Cancelar' },
+      confirmProps: { color: 'red' },
+      onConfirm: handleDelete,
+    })
+  }
+
   return (
     <Card className={s.card}>
-      {user?.id === post.user.id && (
-        <Button
-          component={Link}
-          href={`/posts/edit/${post.id}`}
-          color='blue'
-          className={s.edit}
-        >
-          <PencilLine weight='duotone' size={20} />
-        </Button>
+      {isPostOwner && (
+        <Menu shadow='md' position='bottom-end'>
+          <Menu.Target>
+            <Button color='dark' variant='transparent' className={s.edit}>
+              <DotsThreeOutlineVertical weight='duotone' size={20} />
+            </Button>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Item
+              component={Link}
+              href={`/posts/edit/${post.id}`}
+              color='blue'
+              rightSection={<PencilLine weight='bold' />}
+            >
+              Editar
+            </Menu.Item>
+
+            <Menu.Divider />
+
+            <Menu.Item
+              color='red'
+              onClick={openDeleteModal}
+              rightSection={<Trash />}
+            >
+              Excluir
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       )}
+
       <h1>{post.title}</h1>
       <p className={s.date}>
         Autor: {post.user.name} | Postado em: {dateFormatter(post.created_at)}
