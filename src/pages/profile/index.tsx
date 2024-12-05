@@ -3,12 +3,14 @@ import {
   TUpdateProfileSchema,
   updateProfileSchema,
 } from '@/schemas/auth/updateProfileSchema'
+import { useLogin } from '@/services/auth/useLogin'
 import { useProfile } from '@/services/auth/useProfile'
 import { useUpdateProfile } from '@/services/auth/useUpdateProfile'
 import { handleError } from '@/utils/handleError'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, LoadingOverlay, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { setCookie } from 'nookies'
 import { useEffect, type ReactElement } from 'react'
 import { useForm } from 'react-hook-form'
 import { NextPageWithLayout } from '../_app'
@@ -19,6 +21,7 @@ const Profile: NextPageWithLayout = () => {
   const { trigger: updateProfile, isMutating: isUpdating } = useUpdateProfile(
     data?.id,
   )
+  const { trigger: updateJwt, isMutating: isUpdatingToken } = useLogin()
 
   const {
     register,
@@ -40,7 +43,15 @@ const Profile: NextPageWithLayout = () => {
 
   async function onSubmit(form: TUpdateProfileSchema) {
     try {
-      const { data } = await updateProfile(form)
+      await updateProfile(form)
+
+      const { data } = await updateJwt(form)
+
+      setCookie(null, 'dev-blog-userToken', data.access_token, {
+        maxAge: 24 * 60 * 60 * 30, // 30 days
+        path: '/',
+      })
+
       showNotification({
         title: 'Sucesso!',
         message: `Perfil atualizado com sucesso!`,
@@ -84,8 +95,8 @@ const Profile: NextPageWithLayout = () => {
 
       <Button
         type='submit'
-        loading={isUpdating}
-        disabled={isUpdating || isGetting}
+        loading={isUpdating || isUpdatingToken}
+        disabled={isUpdating || isUpdatingToken || isGetting}
         className={s.button}
       >
         Atualizar perfil

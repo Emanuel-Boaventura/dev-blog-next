@@ -28,11 +28,11 @@ export default function Login() {
 
       showNotification({
         title: 'Login feito com sucesso!',
-        message: `Bem-vindo de volta, ${data.name}!`,
+        message: `Bem-vindo de volta, ${form.name}!`,
         color: 'teal',
       })
 
-      setCookie(null, 'dev-blog-userToken', `${data.id}-${data.email}`, {
+      setCookie(null, 'dev-blog-userToken', data.access_token, {
         maxAge: 24 * 60 * 60 * 30, // 30 days
         path: '/',
       })

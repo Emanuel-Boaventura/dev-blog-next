@@ -7,9 +7,7 @@ interface ILoginForm {
 }
 
 interface ILoginFormReturn {
-  id: number
-  name: string
-  email: string
+  access_token: string
 }
 
 export function useLogin() {
