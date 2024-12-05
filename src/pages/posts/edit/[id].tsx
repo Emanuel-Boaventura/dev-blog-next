@@ -1,8 +1,5 @@
 import { RootLayout } from '@/layouts/RootLayout'
-import {
-  createPostSchema,
-  TCreatePostSchema,
-} from '@/schemas/posts/createSchema'
+import { postSchema, TPostSchema } from '@/schemas/posts/postSchema'
 import { getPostById, IPostFullData } from '@/services/posts/getPostById'
 import { useEditPost } from '@/services/posts/useEdit'
 import { handleError } from '@/utils/handleError'
@@ -45,15 +42,15 @@ const EditPost: NextPageWithLayout<IEditPost> = ({ post }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TCreatePostSchema>({
-    resolver: yupResolver(createPostSchema),
+  } = useForm<TPostSchema>({
+    resolver: yupResolver(postSchema),
     defaultValues: {
       title: post.title,
       description: post.description,
     },
   })
 
-  async function onSubmit(form: TCreatePostSchema) {
+  async function onSubmit(form: TPostSchema) {
     try {
       const { data } = await trigger(form)
       console.log('data:', data)

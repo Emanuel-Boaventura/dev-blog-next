@@ -1,4 +1,4 @@
-import logo from '@/public/assets/me.jpg'
+import logo from '@/public/assets/logo.png'
 import { IPost } from '@/services/posts/useGetAll'
 import { dateFormatter } from '@/utils/formatters'
 import { Card } from '@mantine/core'

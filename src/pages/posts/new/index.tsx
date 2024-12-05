@@ -1,23 +1,20 @@
+import { DropzoneArea } from '@/components/DropzoneArea'
 import { RootLayout } from '@/layouts/RootLayout'
-import {
-  createPostSchema,
-  TCreatePostSchema,
-} from '@/schemas/posts/createSchema'
-import { useRegister } from '@/services/auth/useRegister'
-import { useGetAllPosts } from '@/services/posts/useGetAll'
+import { postSchema, TPostSchema } from '@/schemas/posts/postSchema'
+import { useCreatePost } from '@/services/posts/useCreate'
 import { handleError } from '@/utils/handleError'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Textarea, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
-import { type ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
 import { useForm } from 'react-hook-form'
 import { NextPageWithLayout } from '../../_app'
 import s from './styles.module.scss'
-import { useCreatePost } from '@/services/posts/useCreate'
 
 const NewPost: NextPageWithLayout = () => {
-  const { trigger, isMutating } = useCreatePost()
+  const { trigger: createPost, isMutating } = useCreatePost()
+  const [file, setFile] = useState<File | null>(null)
 
   const router = useRouter()
 
@@ -25,14 +22,19 @@ const NewPost: NextPageWithLayout = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TCreatePostSchema>({
-    resolver: yupResolver(createPostSchema),
+  } = useForm<TPostSchema>({
+    resolver: yupResolver(postSchema),
   })
 
-  async function onSubmit(form: TCreatePostSchema) {
+  async function onSubmit(form: TPostSchema) {
     try {
-      const { data } = await trigger(form)
-      console.log('data:', data)
+      const formData = new FormData()
+
+      if (file) formData.append('file', file)
+      formData.append('title', form.title)
+      formData.append('description', form.description)
+
+      const { data } = await createPost(formData)
 
       showNotification({
         title: 'Post criado com sucesso!',
@@ -40,14 +42,14 @@ const NewPost: NextPageWithLayout = () => {
         color: 'teal',
       })
 
-      router.push('/home')
+      router.push(`/posts/${data.id}`)
     } catch (error) {
       handleError(error)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <TextInput
         {...register('title')}
         label='Titulo'
@@ -64,7 +66,11 @@ const NewPost: NextPageWithLayout = () => {
         minRows={4}
       />
 
-      <Button type='submit'>CRIAR POST</Button>
+      <DropzoneArea setFile={setFile} />
+
+      <Button fullWidth type='submit'>
+        CRIAR POST
+      </Button>
     </form>
   )
 }

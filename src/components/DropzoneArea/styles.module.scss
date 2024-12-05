@@ -1,0 +1,25 @@
+.box {
+  display: flex;
+  min-height: 110px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  pointer-events: none;
+
+  img {
+    max-height: 480px;
+    max-width: 480px;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 566px) {
+    p {
+      text-align: center;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { CommentCard } from '@/components/CommentCard'
 import { RootLayout } from '@/layouts/RootLayout'
-import me from '@/public/assets/me.jpg'
+import logo from '@/public/assets/logo.png'
 import { useProfile } from '@/services/auth/useProfile'
 import { useGetAllPostComments } from '@/services/comments/useGetAllPostComments'
 import { getPostById, IPostFullData } from '@/services/posts/getPostById'
@@ -81,7 +81,7 @@ const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
       {post.image_url && (
         <figure className={s.img}>
           {/* {data.image_url && <Image src={data.image_url} alt={data.title} />} */}
-          {post.image_url && <Image src={me} alt={post.title} />}
+          {post.image_url && <Image src={logo} alt={post.title} />}
           <figcaption>Foto: {getImgName()}</figcaption>
         </figure>
       )}
