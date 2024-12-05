@@ -1,15 +1,14 @@
 import { api } from '@/utils/api'
 import useSWRMutation from 'swr/mutation'
 
-interface IPostForm {
-  title: string
+interface ICommentForm {
   description: string
 }
 
-export function useCreatePost() {
+export function useCreateComment(postId?: number) {
   const { trigger, isMutating } = useSWRMutation(
-    `/posts`,
-    (url, { arg }: { arg: IPostForm }) => api.post(url, arg),
+    postId ? `/comments/${postId}` : null,
+    (url, { arg }: { arg: ICommentForm }) => api.post(url, arg),
   )
 
   return { trigger, isMutating }

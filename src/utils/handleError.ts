@@ -1,4 +1,3 @@
-import { openConfirmModal } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
 import { isAxiosError } from 'axios'
 

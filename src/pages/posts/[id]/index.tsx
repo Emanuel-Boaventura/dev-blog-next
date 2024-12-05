@@ -2,9 +2,11 @@ import { CommentCard } from '@/components/HomePostCard copy'
 import { RootLayout } from '@/layouts/RootLayout'
 import me from '@/public/assets/me.jpg'
 import { useProfile } from '@/services/auth/useProfile'
+import { useGetAllPostComments } from '@/services/comments/useGetAllPostComments'
 import { getPostById, IPostFullData } from '@/services/posts/getPostById'
 import { dateFormatter } from '@/utils/formatters'
-import { Button, Card, Center } from '@mantine/core'
+import { Button, Card, Center, Skeleton } from '@mantine/core'
+import { openContextModal } from '@mantine/modals'
 import { PencilLine } from '@phosphor-icons/react'
 import { GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
@@ -34,15 +36,29 @@ interface IPostPage {
 }
 
 const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
+  const { data: user } = useProfile()
+  const {
+    data: comments,
+    isLoading,
+    error,
+    mutate,
+  } = useGetAllPostComments(post.id)
+
+  const isPostOwner = user?.id === post.user.id
+
   function getImgName() {
     if (!post.image_url) return ''
     const stringArray = post.image_url.split('-')
     return stringArray[stringArray.length - 1].split('.')[0]
   }
 
-  const { data: user } = useProfile()
-
-  const isPostOwner = user?.id === post.user.id
+  function openNewCommentModal() {
+    openContextModal({
+      modal: 'comment',
+      title: 'Criar comentário',
+      innerProps: { postId: post.id, refreshComments: mutate },
+    })
+  }
 
   return (
     <Card className={s.card}>
@@ -74,13 +90,20 @@ const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
         <h2>Comentários:</h2>
 
         <div className={s.comments}>
-          <Button variant='outline'>Comentar</Button>
-
-          {post.comments.length === 0 ? (
+          <Button variant='outline' onClick={openNewCommentModal}>
+            Comentar
+          </Button>
+          {isLoading ? (
+            <>
+              <Skeleton height={120} radius={12} />
+              <Skeleton height={120} radius={12} />
+              <Skeleton height={120} radius={12} />
+            </>
+          ) : comments?.length === 0 ? (
             <Center>Nenhum comentário ainda...</Center>
           ) : (
-            post.comments
-              .sort(
+            comments
+              ?.sort(
                 (a, b) =>
                   new Date(b.created_at).getTime() -
                   new Date(a.created_at).getTime(),
@@ -91,8 +114,13 @@ const Post: NextPageWithLayout<IPostPage> = ({ post }) => {
                   comment={comment}
                   user={user}
                   isPostOwner={isPostOwner}
+                  refreshComments={mutate}
                 />
               ))
+          )}
+
+          {error && (
+            <Center>Não foi possível carregar os comentários...</Center>
           )}
         </div>
       </section>

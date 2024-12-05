@@ -4,7 +4,7 @@ import {
   TCreatePostSchema,
 } from '@/schemas/posts/createSchema'
 import { getPostById, IPostFullData } from '@/services/posts/getPostById'
-import { useEditPost } from '@/services/posts/useEditPost'
+import { useEditPost } from '@/services/posts/useEdit'
 import { handleError } from '@/utils/handleError'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Textarea, TextInput } from '@mantine/core'

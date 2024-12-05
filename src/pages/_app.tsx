@@ -1,3 +1,4 @@
+import { CommentModal } from '@/components/CommentModal'
 import { RouterTransition } from '@/components/RouterTransition'
 import '@/styles/globals.scss'
 import { theme } from '@/styles/theme'
@@ -13,6 +14,15 @@ import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { SWRConfig } from 'swr/_internal'
+
+const modals = {
+  comment: CommentModal,
+}
+declare module '@mantine/modals' {
+  export interface MantineModalsOverride {
+    modals: typeof modals
+  }
+}
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode
@@ -33,9 +43,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
       <SWRConfig value={{ fetcher: async config => (await api(config)).data }}>
         <MantineProvider theme={theme} defaultColorScheme='dark'>
-          <Notifications />
-          <RouterTransition />
-          <ModalsProvider modalProps={{ centered: true, radius: 8 }}>
+          <ModalsProvider
+            modals={modals}
+            modalProps={{ centered: true, radius: 8 }}
+          >
+            <Notifications />
+            <RouterTransition />
             {getLayout(<Component {...pageProps} />)}
           </ModalsProvider>
         </MantineProvider>
