@@ -68,7 +68,12 @@ const NewPost: NextPageWithLayout = () => {
 
       <DropzoneArea setFile={setFile} />
 
-      <Button fullWidth type='submit'>
+      <Button
+        fullWidth
+        type='submit'
+        disabled={isMutating}
+        loading={isMutating}
+      >
         CRIAR POST
       </Button>
     </form>

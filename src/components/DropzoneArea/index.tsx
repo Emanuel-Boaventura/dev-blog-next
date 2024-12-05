@@ -17,6 +17,7 @@ interface IDropzoneArea {
 }
 
 export function DropzoneArea({ setFile, imageUrl }: IDropzoneArea) {
+  console.log('imageUrl:', imageUrl)
   const [image, setImage] = useState<string>('')
 
   function handleDrop(files: FileWithPath[]) {
@@ -48,15 +49,12 @@ export function DropzoneArea({ setFile, imageUrl }: IDropzoneArea) {
         accept={IMAGE_MIME_TYPE}
       >
         <div className={s.box}>
-          {image ?? imageUrl ? (
+          {image || imageUrl ? (
             <Image
-              src={image ?? imageUrl}
+              src={image || (imageUrl ?? '')}
               width={480}
               height={480}
               alt=''
-              onError={() => {
-                setImage('/assets/placeholder-image.jpg')
-              }}
               objectFit='cover'
               quality={100}
             />

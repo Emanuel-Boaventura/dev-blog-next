@@ -1,4 +1,3 @@
-import logo from '@/public/assets/logo.png'
 import { IPost } from '@/services/posts/useGetAll'
 import { dateFormatter } from '@/utils/formatters'
 import { Card } from '@mantine/core'
@@ -16,8 +15,15 @@ export function HomePostCard({ data }: { data: IPost }) {
         <p className={s.date}>Postado em: {dateFormatter(data.created_at)}</p>
       </div>
 
-      {/* {data.image_url && <Image src={data.image_url} alt={data.title} />} */}
-      {data.image_url && <Image src={logo} alt={data.title} />}
+      {data.image_url && (
+        <Image
+          src={'/assets/logo.png'}
+          width={480}
+          height={480}
+          objectFit='cover'
+          alt={data.title}
+        />
+      )}
     </Card>
   )
 }

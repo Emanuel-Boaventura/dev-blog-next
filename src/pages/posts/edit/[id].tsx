@@ -1,3 +1,4 @@
+import { DropzoneArea } from '@/components/DropzoneArea'
 import { RootLayout } from '@/layouts/RootLayout'
 import { postSchema, TPostSchema } from '@/schemas/posts/postSchema'
 import { getPostById, IPostFullData } from '@/services/posts/getPostById'
@@ -9,7 +10,7 @@ import { showNotification } from '@mantine/notifications'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import nookies from 'nookies'
-import { type ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
 import { useForm } from 'react-hook-form'
 import { NextPageWithLayout } from '../../_app'
 import s from './styles.module.scss'
@@ -29,12 +30,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 }
 
-interface IEditPost {
+interface IEditPostPage {
   post: IPostFullData
 }
 
-const EditPost: NextPageWithLayout<IEditPost> = ({ post }) => {
-  const { trigger, isMutating } = useEditPost(post.id)
+const EditPost: NextPageWithLayout<IEditPostPage> = ({ post }) => {
+  const { trigger: editPost, isMutating } = useEditPost(post.id)
+  const [file, setFile] = useState<File | null>(null)
 
   const router = useRouter()
 
@@ -45,30 +47,36 @@ const EditPost: NextPageWithLayout<IEditPost> = ({ post }) => {
   } = useForm<TPostSchema>({
     resolver: yupResolver(postSchema),
     defaultValues: {
-      title: post.title,
-      description: post.description,
+      title: post?.title,
+      description: post?.description,
     },
   })
 
   async function onSubmit(form: TPostSchema) {
     try {
-      const { data } = await trigger(form)
-      console.log('data:', data)
+      const formData = new FormData()
+
+      if (file) formData.append('file', file)
+      formData.append('title', form.title)
+      formData.append('description', form.description)
+
+      const { data } = await editPost(formData)
 
       showNotification({
-        title: 'Post criado com sucesso!',
+        title: 'Post editado com sucesso!',
         message: `Divulge para que todos possam ver!`,
         color: 'teal',
       })
 
-      router.push('/home')
+      router.push(`/posts/${data.id}`)
     } catch (error) {
       handleError(error)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <h1>Editar Postagem</h1>
       <TextInput
         {...register('title')}
         label='Titulo'
@@ -85,8 +93,19 @@ const EditPost: NextPageWithLayout<IEditPost> = ({ post }) => {
         minRows={4}
       />
 
-      <Button type='submit' disabled={isMutating} loading={isMutating}>
-        EDITAR POST
+      <DropzoneArea
+        setFile={setFile}
+        // imageUrl={post.image_url}
+        imageUrl='/assets/logo.png'
+      />
+
+      <Button
+        fullWidth
+        type='submit'
+        disabled={isMutating}
+        loading={isMutating}
+      >
+        EDITAR
       </Button>
     </form>
   )
