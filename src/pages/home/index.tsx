@@ -1,4 +1,4 @@
-import { HomePostCard } from '@/components/Posts/HomePostCard'
+import { HomePostCard } from '@/components/HomePostCard'
 import { RootLayout } from '@/layouts/RootLayout'
 import { useGetAllPosts } from '@/services/posts/useGetAll'
 import { Button, Center, Skeleton } from '@mantine/core'
@@ -15,7 +15,7 @@ const Home: NextPageWithLayout = () => {
 
   const sortedPosts = data?.sort(
     (a, b) =>
-      new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
   )
 
   return (

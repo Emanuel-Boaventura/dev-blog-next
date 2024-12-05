@@ -1,0 +1,32 @@
+.card,
+.deletedCard {
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  position: relative;
+
+  .date {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .edit {
+    position: absolute;
+    top: 16px;
+    right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+    padding: 0;
+  }
+}
+
+.deletedCard {
+  background-color: var(--mantine-color-dark-8);
+  p {
+    margin: auto;
+  }
+}

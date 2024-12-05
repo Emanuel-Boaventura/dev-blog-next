@@ -2,7 +2,7 @@ import logo from '@/public/assets/logo.png'
 import { useProfile } from '@/services/auth/useProfile'
 import { AppShell, Avatar, Button, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { ChartLine, Gear, SignOut } from '@phosphor-icons/react'
+import { ChartLine, Gear, Plus, SignOut } from '@phosphor-icons/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -55,6 +55,15 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
             </Menu.Target>
 
             <Menu.Dropdown>
+              <Menu.Item
+                component={Link}
+                href={'/posts/new'}
+                color='blue'
+                leftSection={<Plus weight='bold' />}
+              >
+                Novo post
+              </Menu.Item>
+
               <Menu.Item
                 component={Link}
                 href={'/settings'}

@@ -1,13 +1,14 @@
 import useSWR from 'swr'
 
-interface IProfile {
+export interface IUser {
   id: number
   name: string
   email: string
+  created_at: string
 }
 
 export function useProfile() {
-  const { data, error, isLoading, mutate } = useSWR<IProfile>(`/auth/profile`)
+  const { data, error, isLoading, mutate } = useSWR<IUser>(`/auth/profile`)
 
   return { data, error, isLoading, mutate }
 }
